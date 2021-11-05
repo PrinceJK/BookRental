@@ -9,8 +9,9 @@
     different data structure, as long as it is enumerable, our view code
     will remain unchanged.
 *@
-ViewBag.Title = "Customers";
-Layout = "~/Views/Shared/_Layout.cshtml";
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Customers</h2>
@@ -24,7 +25,7 @@ else
         <thead>
             <tr>
                 <th>Customer</th>
-                <th>Discount Rate</th>
+                <th>Membership Type</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +33,7 @@ else
             {
                 <tr>
                     <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
-                    <td>@customer.MembershipType.DiscountRate</td>
+                    <td>@customer.MembershipType.Name</td>
                 </tr>
             }
         </tbody>

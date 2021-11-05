@@ -26,7 +26,7 @@ namespace BookRental.Controllers
             var viewModel = new NewCustomerViewModel
             {
                 MembershipTypes = membershipTypes
-            }
+            };
             return View(viewModel);
         }
         public ViewResult Index()
@@ -46,6 +46,15 @@ namespace BookRental.Controllers
                 return HttpNotFound();
             }
             return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customers");
         }
     }
 }

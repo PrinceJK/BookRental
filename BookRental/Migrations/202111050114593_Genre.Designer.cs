@@ -7,13 +7,13 @@ namespace BookRental.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class populateMenbershipTypes : IMigrationMetadata
+    public sealed partial class Genre : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(populateMenbershipTypes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Genre));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111041715045_populateMenbershipTypes"; }
+            get { return "202111050114593_Genre"; }
         }
         
         string IMigrationMetadata.Source

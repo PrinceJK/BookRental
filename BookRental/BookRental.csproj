@@ -175,22 +175,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111041712187_addmembershipType.cs" />
-    <Compile Include="Migrations\202111041712187_addmembershipType.Designer.cs">
-      <DependentUpon>202111041712187_addmembershipType.cs</DependentUpon>
+    <Compile Include="Migrations\202111050102339_PopulateMembershipTypes.cs" />
+    <Compile Include="Migrations\202111050102339_PopulateMembershipTypes.Designer.cs">
+      <DependentUpon>202111050102339_PopulateMembershipTypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111041715045_populateMenbershipTypes.cs" />
-    <Compile Include="Migrations\202111041715045_populateMenbershipTypes.Designer.cs">
-      <DependentUpon>202111041715045_populateMenbershipTypes.cs</DependentUpon>
+    <Compile Include="Migrations\202111050103179_SetNameOfMembershipTypes.cs" />
+    <Compile Include="Migrations\202111050103179_SetNameOfMembershipTypes.Designer.cs">
+      <DependentUpon>202111050103179_SetNameOfMembershipTypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111041720249_applyAnnotationsToCustomerName.cs" />
-    <Compile Include="Migrations\202111041720249_applyAnnotationsToCustomerName.Designer.cs">
-      <DependentUpon>202111041720249_applyAnnotationsToCustomerName.cs</DependentUpon>
+    <Compile Include="Migrations\202111050106089_SetNameOfMembershipTypes1.cs" />
+    <Compile Include="Migrations\202111050106089_SetNameOfMembershipTypes1.Designer.cs">
+      <DependentUpon>202111050106089_SetNameOfMembershipTypes1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111050114593_Genre.cs" />
+    <Compile Include="Migrations\202111050114593_Genre.Designer.cs">
+      <DependentUpon>202111050114593_Genre.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -281,14 +286,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111041712187_addmembershipType.resx">
-      <DependentUpon>202111041712187_addmembershipType.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111050102339_PopulateMembershipTypes.resx">
+      <DependentUpon>202111050102339_PopulateMembershipTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111041715045_populateMenbershipTypes.resx">
-      <DependentUpon>202111041715045_populateMenbershipTypes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111050103179_SetNameOfMembershipTypes.resx">
+      <DependentUpon>202111050103179_SetNameOfMembershipTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111041720249_applyAnnotationsToCustomerName.resx">
-      <DependentUpon>202111041720249_applyAnnotationsToCustomerName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111050106089_SetNameOfMembershipTypes1.resx">
+      <DependentUpon>202111050106089_SetNameOfMembershipTypes1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111050114593_Genre.resx">
+      <DependentUpon>202111050114593_Genre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

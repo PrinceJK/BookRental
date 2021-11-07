@@ -2,9 +2,7 @@
 using BookRental.Dtos;
 using BookRental.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Http;
 
 namespace BookRental.Controllers.Api
@@ -19,9 +17,10 @@ namespace BookRental.Controllers.Api
         }
         //Get /api/customers
         [HttpGet]
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            var customers = _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(customers);
         }
 
         //GET /api/customers/1
@@ -56,33 +55,35 @@ namespace BookRental.Controllers.Api
 
         //PUT /api/customer/1
         [HttpPut]
-        public void UpdateCustomer(int id, CustomerDto customerDto)
+        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             var customerIdDb = _context.Customers.SingleOrDefault(x => x.Id == id);
             if (customerIdDb == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             }
 
             Mapper.Map(customerDto, customerIdDb);
 
             _context.SaveChanges();
+            return Ok();
         }
 
         [HttpDelete]
-        public void DeleteCustomer(int id, Customer customer)
+        public IHttpActionResult DeleteCustomer(int id)
         {
             var customerIdDb = _context.Customers.SingleOrDefault(x => x.Id == id);
             if (customerIdDb == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             }
             _context.Customers.Remove(customerIdDb);
             _context.SaveChanges();
+            return Ok();
         }
     }
 }

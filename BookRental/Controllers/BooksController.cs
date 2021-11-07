@@ -1,15 +1,47 @@
 ﻿using BookRental.Models;
 using BookRental.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace BookRental.Controllers
 {
     public class BooksController : Controller
     {
-        // GET: Books/Random
+        private ApplicationDbContext _context;
+
+        public BooksController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+
+        public ViewResult Index()
+        {
+            var books = _context.Books.Include(m => m.Genre).ToList();
+            return View(books);
+        }
+        public ViewResult New()
+        {
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new BookFormViewModel
+            {
+                
+                Genres = genres
+            };
+
+            return View("BookForm", viewModel);
+        }
         public ActionResult Random()
         {
+
             var book = new Book()
             {
                 Name = "The Lords!"
@@ -29,31 +61,68 @@ namespace BookRental.Controllers
             return View(viewModel);
         }
 
-        //public ActionResult Edit(string bookId)
-        //{
-        //    return Content("Id=" + bookId);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Book book)
+        {
 
-        //public ActionResult Index(int? pageIndex, string sortBy)
-        //{
-        //    if (!pageIndex.HasValue)
-        //    {
-        //        pageIndex = 1;
-        //    }
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new BookFormViewModel(book)
+                {
+                    Genres = _context.Genres.ToList()
+                };
 
-        //    if (string.IsNullOrWhiteSpace(sortBy))
-        //    {
-        //        sortBy = "Name";
-        //    }
+                return View("BookForm", viewModel);
+            }
 
-        //    return Content(string.Format("pageIndex={0}&sortBy={1}", pageIndex,sortBy));
+            if (book.Id == 0)
+            {
+                book.DateAdded = DateTime.Now;
+                _context.Books.Add(book);
+            }
+            else
+            {
+                var bookInDb = _context.Books.Single(x => x.Id == book.Id);
+                bookInDb.Name = book.Name;
+                bookInDb.GenreId = book.GenreId;
+                bookInDb.NumberInStock = book.NumberInStock;
+                bookInDb.Publisheddate = book.Publisheddate;
+            }
 
-        //}
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Books");
 
-        //[Route("books/released/{year}/{month:regex(\\d{2}):range(1,12)}")]
-        //public ActionResult ByReleaseDate(int year, int month)
-        //{
-        //    return Content(year + "/" + month);
-        //}
+
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var book = _context.Books.SingleOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new BookFormViewModel(book)
+            {
+                Genres = _context.Genres.ToList()
+            };
+            return View("BookForm", viewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+           var book = _context.Books.Include(b => b.Genre).SingleOrDefault(x => x.Id == id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
     }
+
+
 }

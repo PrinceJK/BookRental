@@ -1,4 +1,6 @@
-﻿using Microsoft.Owin;
+﻿using BookRental.App_Start;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(BookRental.Startup))]
@@ -10,5 +12,6 @@ namespace BookRental
         {
             ConfigureAuth(app);
         }
+       
     }
 }

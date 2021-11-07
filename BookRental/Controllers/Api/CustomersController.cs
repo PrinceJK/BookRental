@@ -1,4 +1,6 @@
-﻿using BookRental.Models;
+﻿using AutoMapper;
+using BookRental.Dtos;
+using BookRental.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,19 +11,21 @@ namespace BookRental.Controllers.Api
     public class CustomersController : ApiController
     {
         private ApplicationDbContext _context;
+
         public CustomersController()
         {
             _context = new ApplicationDbContext();
         }
         //Get /api/customers
         [HttpGet]
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
         }
 
         //GET /api/customers/1
-        public Customer GetCustomer(int id)
+        [HttpGet]
+        public CustomerDto GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
@@ -29,26 +33,29 @@ namespace BookRental.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            return customer;
+            return Mapper.Map<Customer, CustomerDto>(customer);
         }
 
         //POST /api/customers
         [HttpPost]
-        public Customer CreateCustomer(Customer customer)
+        public CustomerDto CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
+
+            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return customer;
+            customerDto.Id = customer.Id;
+            return customerDto;
         }
 
         //PUT /api/customer/1
         [HttpPut]
-        public void UpdateCustomer(int id, Customer customer)
+        public void UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
@@ -59,10 +66,8 @@ namespace BookRental.Controllers.Api
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-            customerIdDb.Name = customer.Name;
-            customerIdDb.Birthdate = customer.Birthdate;
-            customerIdDb.IsSubScribedToNewsLetter = customer.IsSubScribedToNewsLetter;
-            customerIdDb.MembershipType = customer.MembershipType;
+
+            Mapper.Map(customerDto, customerIdDb);
 
             _context.SaveChanges();
         }

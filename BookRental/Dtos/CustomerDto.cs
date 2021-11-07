@@ -1,5 +1,4 @@
-﻿using BookRental.Models;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookRental.Dtos
@@ -14,7 +13,7 @@ namespace BookRental.Dtos
         
         public byte MembershipTypeId { get; set; }
         
-        [Min18YearsIfAMember]
+        //[Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
     }
 }

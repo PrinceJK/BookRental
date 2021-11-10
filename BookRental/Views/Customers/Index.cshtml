@@ -55,11 +55,11 @@ else
                         url: "/api/customers/" + button.attr("data-customer-id"),
                         method: "DELETE",
                         success: function () {
-                            button.parent("tr").remove();
+                            button.parents("tr").remove();
                         }
-                    })
+                    });
                 }
             });
         });
     </script>
-    } 
+} 
